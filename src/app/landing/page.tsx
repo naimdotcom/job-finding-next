@@ -17,7 +17,9 @@ export default function Home() {
 
       {/* Featured Jobs */}
       <section className="max-w-5xl mx-auto mt-10 p-6 bg-zinc-200 shadow-2xl rounded-lg">
-        <h2 className="text-2xl font-bold">Featured Jobs</h2>
+        <h2 className="text-2xl font-bold dark:text-zinc-800 text-white">
+          Featured Jobs
+        </h2>
         <div className="mt-4">
           {[1, 2, 3].map((job) => (
             <div
@@ -25,14 +27,15 @@ export default function Home() {
               className="p-4 border-b border-zinc-300 flex justify-between items-center"
             >
               <div>
-                <h3 className="text-lg font-semibold flex items-center">
-                  <Briefcase className="mr-2 text-blue-500" /> Software Engineer
+                <h3 className="text-lg font-semibold flex items-center dark:text-zinc-800 text-white">
+                  <Briefcase className="mr-2 text-blue-500 " /> Software
+                  Engineer
                 </h3>
-                <p className="text-gray-500 flex items-center">
+                <p className="text-zinc-800 flex items-center">
                   <MapPin className="mr-2 text-red-500" /> New York, USA
                 </p>
               </div>
-              <button className="flex items-center text-blue-accent">
+              <button className="flex items-center text-blue-600">
                 Apply <ChevronRight size={18} />
               </button>
             </div>

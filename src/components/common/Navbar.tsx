@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 export default async function Navbar() {
   return (
@@ -7,7 +8,7 @@ export default async function Navbar() {
         <Link href="/" className="text-2xl font-bold">
           JobFinder
         </Link>
-        <ul className="flex space-x-6">
+        <ul className="flex space-x-6 items-center">
           <li>
             <Link href="/jobs" className="hover:underline">
               Jobs
@@ -23,6 +24,18 @@ export default async function Navbar() {
               Contact
             </Link>
           </li>
+          <div className="flex gap-1.5">
+            <li>
+              <Link href="/login" className="hover:underline">
+                <Button>log in</Button>
+              </Link>
+            </li>
+            <li>
+              <Link href="/signup" className="hover:underline">
+                <Button variant={"link"}>sign up</Button>
+              </Link>
+            </li>
+          </div>
         </ul>
       </div>
     </nav>

@@ -72,13 +72,6 @@
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
 
-@theme {
-  --color-dark-primary: #222831;
-  --color-dark-secondary: #31363f;
-  --color-blue-accent: #76abae;
-  --color-light-primary: #eeeeee;
-}
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -122,6 +115,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-dark-primary text-foreground;
+    @apply dark:bg-zinc-950 bg-zinc-100 text-foreground;
   }
 }

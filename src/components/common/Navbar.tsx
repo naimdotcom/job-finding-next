@@ -28,7 +28,7 @@ export default async function Navbar() {
             </li>
             <div className="flex gap-1.5">
               <li>
-                <Link href="/login" className="hover:underline">
+                <Link href="/log-in" className="hover:underline">
                   <Button>log in</Button>
                 </Link>
               </li>

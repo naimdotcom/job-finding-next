@@ -4,57 +4,69 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   try {
     const path = req.nextUrl.pathname;
-    const token = req.cookies.get("jobfindertoken");
     const isPublicRoute =
-      // path === "/" ||
       path === "/landing" || path === "/log-in" || path === "/signup";
     const isBackend = path.startsWith("/api");
-    console.log("isbackend", isBackend);
 
-    if (!token?.name || !token?.value) {
+    // Extract token from "Authorization" header (Bearer <token>)
+    let token = req.headers.get("Authorization")?.split(" ")[1];
+
+    // If no token in Authorization, fallback to cookies
+    if (!token) {
+      token = req.cookies.get("jobfindertoken")?.value || "";
+    }
+
+    // If no token is found, handle unauthorized access
+    if (!token) {
       if (isBackend) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
       }
-
       if (!isPublicRoute) {
         return NextResponse.redirect(new URL("/log-in", req.url));
       }
       return NextResponse.next();
     }
 
-    const decoded = await verifyToken(token.value);
+    // Verify token
+    const decoded = await verifyToken(token);
     if (!decoded) {
       if (isBackend) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
       }
 
       const response = NextResponse.redirect(new URL("/log-in", req.url));
-      response.cookies.delete("jobfindertoken");
+      response.cookies.delete("jobfindertoken"); // Remove invalid token
       return response;
     }
 
-    const requestHeader = new Headers(req.headers);
-    requestHeader.set("x-user-data", JSON.stringify(decoded));
-
+    // Prevent authenticated users from accessing public routes (like login/signup)
     if (isPublicRoute && !isBackend) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
+    // Attach user data to backend requests
     if (isBackend) {
+      const requestHeaders = new Headers(req.headers);
+      requestHeaders.set("x-user-data", JSON.stringify(decoded));
+
       return NextResponse.next({
         request: {
-          headers: requestHeader,
+          headers: requestHeaders,
         },
       });
     }
 
-    // return NextResponse.next();
+    return NextResponse.next();
   } catch (error) {
-    console.log("error while middleware", error);
-    return NextResponse.json({ message: "Error" }, { status: 500 });
+    console.log("Error in middleware:", error);
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
+// Define routes to apply middleware
 export const config = {
   matcher: [
     "/landing",

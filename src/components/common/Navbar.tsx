@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./ModalToggle";
 
+async function fetchData() {}
+
 export default async function Navbar() {
   return (
     <nav className="bg-zinc-200 dark:bg-zinc-900 drop-shadow-md text-white p-4 py-6 sticky top-0">

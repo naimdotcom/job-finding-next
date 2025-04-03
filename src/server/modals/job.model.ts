@@ -14,7 +14,8 @@ export interface IJob extends Document {
   title: string;
   description: string;
   location: string;
-  salary?: string;
+  startingSalary?: Number;
+  endingSalary?: Number;
   company: mongoose.Types.ObjectId;
   requirements: string[];
   jobType: JobType;
@@ -43,8 +44,13 @@ const JobSchema: Schema = new Schema<IJob>(
       required: true,
       trim: true,
     },
-    salary: {
-      type: String,
+    startingSalary: {
+      type: Number,
+      trim: true,
+      required: true,
+    },
+    endingSalary: {
+      type: Number,
       trim: true,
     },
     description: {

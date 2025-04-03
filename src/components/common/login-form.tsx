@@ -46,8 +46,8 @@ export default function LoginForm({
         email: loginInfo.email,
         password: loginInfo.password,
       });
-      console.log("data: ", data);
-      if (data.status === 200) {
+      console.log("data: ", data.status);
+      if (data.status == 200) {
         router.push("/"); // ✅ Redirect after login success
       }
     } catch (error) {

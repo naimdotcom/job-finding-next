@@ -49,8 +49,15 @@ export const POST = async (req: Request) => {
 
     const response = NextResponse.json(
       new ApiResponse(user, "successfully logged in", token),
-      { status: 200, headers: { setCookie: `jobfindertoken=${token}` } }
+      { status: 200 }
     );
+
+    response.cookies.set("jobfindertoken", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 10, // 7 days
+    });
 
     return response;
   } catch (error: any) {

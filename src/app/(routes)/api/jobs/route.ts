@@ -9,7 +9,10 @@ export const GET = async (req: NextRequest) => {
   try {
     await connect();
 
-    const jobs = await Job.find();
+    const jobs = await Job.find().populate("company").populate({
+      path: "postedBy",
+      select: "-password -role",
+    });
 
     return NextResponse.json(new ApiResponse(jobs, "successfully fetched"));
   } catch (error) {

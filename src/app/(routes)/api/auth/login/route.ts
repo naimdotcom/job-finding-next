@@ -17,6 +17,7 @@ export const GET = async (req: Request) => {
 export const POST = async (req: Request) => {
   try {
     await connect();
+    console.log("req: ", req.headers.get("x-user-data"));
     const body = await req.json();
     const { email, password } = body;
 
@@ -30,7 +31,7 @@ export const POST = async (req: Request) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      return NextResponse.json({ message: "User not found" }, { status: 400 });
     }
 
     if (user.password !== password) {

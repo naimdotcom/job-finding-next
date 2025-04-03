@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { Schema, model, models } from "mongoose";
 
 const userShema = new Schema(
@@ -10,6 +11,7 @@ const userShema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     password: {
       type: String,
@@ -17,7 +19,8 @@ const userShema = new Schema(
     },
     role: {
       type: String,
-      required: true,
+      default: "user",
+      enum: ["user", "client", "admin"],
     },
 
     // todo: varified work

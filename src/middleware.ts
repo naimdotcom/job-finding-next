@@ -1,6 +1,18 @@
 import { verifyToken } from "@/server/utils/auth.middleware";
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+  matcher: [
+    "/landing",
+    "/log-in",
+    "/signup",
+    "/jobs",
+    "/jobs/:path*",
+    "/api/user/:path*",
+  ],
+  runtime: "nodejs",
+};
+
 export async function middleware(req: NextRequest) {
   try {
     const path = req.nextUrl.pathname;
@@ -26,10 +38,7 @@ export async function middleware(req: NextRequest) {
     }
 
     const decoded = verifyToken(token.value);
-    if (!decoded) {
-      return NextResponse.json({ message: "Invalid Token" }, { status: 403 });
-    }
-
+    console.log("decoded", decoded, token);
     if (!decoded) {
       if (isBackend) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -57,14 +66,3 @@ export async function middleware(req: NextRequest) {
     return NextResponse.json({ message: "Error" }, { status: 500 });
   }
 }
-
-export const config = {
-  matcher: [
-    "/landing",
-    "/log-in",
-    "/signup",
-    "/jobs",
-    "/jobs/:path*",
-    "/api/user/:path*",
-  ],
-};

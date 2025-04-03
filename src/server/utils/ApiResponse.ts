@@ -4,7 +4,7 @@ export class ApiResponse {
   error: any;
   constructor(data: any, message: string = "success", error: any = null) {
     this.data = data;
-    this.message = error.message;
+    this.message = message;
     this.error = error;
   }
 }

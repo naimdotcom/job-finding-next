@@ -1,18 +1,6 @@
 import { verifyToken } from "@/server/utils/auth.middleware";
 import { NextRequest, NextResponse } from "next/server";
 
-export const config = {
-  matcher: [
-    "/landing",
-    "/log-in",
-    "/signup",
-    "/jobs",
-    "/jobs/:path*",
-    "/api/user/:path*",
-  ],
-  runtime: "nodejs",
-};
-
 export async function middleware(req: NextRequest) {
   try {
     const path = req.nextUrl.pathname;
@@ -23,7 +11,7 @@ export async function middleware(req: NextRequest) {
       path === "/log-in" ||
       path === "/signup";
     const isBackend = path.startsWith("/api");
-
+    const isProtectedAPI = path.startsWith("/api/user");
     console.log("isbackend", isBackend);
 
     if (!token?.name || !token?.value) {
@@ -37,8 +25,7 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
 
-    const decoded = verifyToken(token.value);
-    console.log("decoded", decoded, token);
+    const decoded = await verifyToken(token.value);
     if (!decoded) {
       if (isBackend) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -50,19 +37,36 @@ export async function middleware(req: NextRequest) {
     }
 
     const requestHeader = new Headers(req.headers);
-    requestHeader.set("x-user-data", JSON.stringify(token.value));
+    requestHeader.set("x-user-data", JSON.stringify(decoded));
 
     if (isPublicRoute && !isBackend) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    return NextResponse.next({
-      request: {
-        headers: requestHeader,
-      },
-    });
+    if (isBackend) {
+      return NextResponse.next({
+        request: {
+          headers: requestHeader,
+        },
+      });
+    }
+
+    // return NextResponse.next();
   } catch (error) {
     console.log("error while middleware", error);
     return NextResponse.json({ message: "Error" }, { status: 500 });
   }
 }
+
+export const config = {
+  matcher: [
+    "/landing",
+    "/log-in",
+    "/signup",
+    "/jobs",
+    "/jobs/:path*",
+    "/api/user",
+    "/api/user/:path*",
+    "/api/auth/verify",
+  ],
+};

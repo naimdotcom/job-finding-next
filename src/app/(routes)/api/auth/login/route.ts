@@ -9,7 +9,7 @@ export const POST = async (req: Request) => {
     await connect();
     const body = await req.json();
     const { email, password } = body;
-
+    console.log("body: ", body);
     if (!email || !password) {
       return NextResponse.json(new ApiError("All fields are required"), {
         status: 400,
@@ -24,6 +24,7 @@ export const POST = async (req: Request) => {
     }
 
     const isPasswordValid = await user.comparePassword(password);
+    console.log("isPasswordValid: ", isPasswordValid);
     if (!isPasswordValid) {
       return NextResponse.json(new ApiError("Invalid password"), {
         status: 401,
@@ -46,14 +47,10 @@ export const POST = async (req: Request) => {
       email: user.email,
     });
 
-    const response = NextResponse.redirect(new URL("/", req.url));
-
-    response.cookies.set("jobfindertoken", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-      path: "/",
-    });
+    const response = NextResponse.json(
+      new ApiResponse(user, "successfully logged in", token),
+      { status: 200, headers: { setCookie: `jobfindertoken=${token}` } }
+    );
 
     return response;
   } catch (error: any) {

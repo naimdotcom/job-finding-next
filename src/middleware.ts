@@ -6,12 +6,9 @@ export async function middleware(req: NextRequest) {
     const path = req.nextUrl.pathname;
     const token = req.cookies.get("jobfindertoken");
     const isPublicRoute =
-      path === "/" ||
-      path === "/landing" ||
-      path === "/log-in" ||
-      path === "/signup";
+      // path === "/" ||
+      path === "/landing" || path === "/log-in" || path === "/signup";
     const isBackend = path.startsWith("/api");
-    const isProtectedAPI = path.startsWith("/api/user");
     console.log("isbackend", isBackend);
 
     if (!token?.name || !token?.value) {
@@ -70,5 +67,7 @@ export const config = {
     "/api/auth/verify",
     "/api/company",
     "/api/jobs",
+    "/api/jobs/:path*",
+    "/",
   ],
 };

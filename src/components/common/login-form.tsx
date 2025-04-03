@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { Loader } from "lucide-react";
+import axiosInstance from "@/lib/axios";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export type loginType = {
   email: string;
@@ -19,6 +25,37 @@ export default function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [loginInfo, setLoginInfo] = useState<loginType>({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginInfo({
+      ...loginInfo,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const data = await axiosInstance.post("/auth/login", {
+        email: loginInfo.email,
+        password: loginInfo.password,
+      });
+      console.log("data: ", data);
+      if (data.status === 200) {
+        router.push("/"); // ✅ Redirect after login success
+      }
+    } catch (error) {
+      console.log("error while logging in", error);
+      toast.error("Error while logging in");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -29,7 +66,7 @@ export default function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleForm}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
@@ -38,6 +75,7 @@ export default function LoginForm({
                   type="email"
                   placeholder="m@example.com"
                   required
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="grid gap-3">
@@ -50,11 +88,16 @@ export default function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  onChange={handleOnChange}
+                />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  Login
+                  {loading ? <Loader className="animate-spin" /> : "Login"}
                 </Button>
                 <Button variant="outline" className="w-full">
                   Login with Google

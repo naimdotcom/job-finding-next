@@ -50,6 +50,13 @@ export const POST = async (req: NextRequest) => {
       });
     }
 
+    const isJobExist = await Job.findOne({ title });
+    if (isJobExist && isJobExist.postedBy.toString() !== user.id) {
+      return NextResponse.json(new ApiError("Job already exist by you"), {
+        status: 400,
+      });
+    }
+
     const isCompanyCreatedByPoster = await Company.findById(company);
     if (!isCompanyCreatedByPoster) {
       return NextResponse.json(new ApiError("Company not found"), {

@@ -59,3 +59,23 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error }, { status: 500 });
   }
 };
+
+export const GET = async (req: NextRequest) => {
+  try {
+    await connect();
+
+    const companies = await Company.find();
+    if (!companies) {
+      return NextResponse.json(new ApiError("Company not found"), {
+        status: 404,
+      });
+    }
+
+    return NextResponse.json(
+      new ApiResponse(companies, "successfully fetched")
+    );
+  } catch (error) {
+    console.log("error while fetching company", error);
+    return NextResponse.json({ error }, { status: 500 });
+  }
+};

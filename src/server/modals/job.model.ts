@@ -12,13 +12,14 @@ export enum JobType {
 // Define the Job schema interface
 export interface IJob extends Document {
   title: string;
-  company: string;
-  location: string;
-  salary?: number;
   description: string;
+  location: string;
+  salary?: string;
+  company: mongoose.Types.ObjectId;
   requirements: string[];
   jobType: JobType;
   postedBy: mongoose.Types.ObjectId; // Employer's ID
+  expireAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,7 +33,8 @@ const JobSchema: Schema = new Schema<IJob>(
       trim: true,
     },
     company: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
       required: true,
       trim: true,
     },
@@ -42,8 +44,8 @@ const JobSchema: Schema = new Schema<IJob>(
       trim: true,
     },
     salary: {
-      type: Number,
-      default: 0,
+      type: String,
+      trim: true,
     },
     description: {
       type: String,
@@ -62,6 +64,10 @@ const JobSchema: Schema = new Schema<IJob>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true, // Links to the Employer's user ID
+    },
+    expireAt: {
+      type: Date,
+      required: true,
     },
   },
   { timestamps: true }

@@ -1,3 +1,4 @@
+import connect from "@/server/DB";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -5,6 +6,7 @@ export const GET = async (
   context: { params: Promise<any> }
 ) => {
   try {
+    await connect();
     const { id } = await context.params;
 
     console.log(id);

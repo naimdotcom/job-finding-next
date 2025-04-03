@@ -22,6 +22,7 @@ const CompanySchema: Schema = new Schema<ICompany>(
       required: true,
       trim: true,
       unique: true, // Ensure no duplicate company names
+      index: true,
     },
     location: {
       type: String,

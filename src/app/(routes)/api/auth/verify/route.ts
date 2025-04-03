@@ -4,7 +4,7 @@ import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
 import { isValidObjectId, Types } from "mongoose";
 import { NextResponse } from "next/server";
 
-type payload = {
+export type payload = {
   id: string;
   name: string;
   email: string;

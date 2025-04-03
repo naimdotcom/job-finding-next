@@ -1,7 +1,11 @@
 import bcrypt from "bcryptjs";
 
 export const hashPassword = async (password: string) => {
-  return await bcrypt.hash(password, 10);
+  const salt = bcrypt.genSaltSync(
+    process.env.SALT ? Number(process.env.SALT) : 10
+  );
+
+  return await bcrypt.hash(password, salt);
 };
 
 export const comparePassword = async (password: string, hash: string) => {

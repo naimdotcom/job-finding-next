@@ -1,8 +1,7 @@
 import connect from "@/server/DB";
-import Company from "@/server/modals/company.model";
+import Job from "@/server/modals/job.model";
 import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
-import { Types } from "mongoose";
-import { isValidObjectId } from "mongoose";
+import { isValidObjectId, Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -16,14 +15,13 @@ export const GET = async (
       ? id
       : Types.ObjectId.createFromHexString(id);
 
-    const company = await Company.findById(ID);
-    if (!company) {
-      return NextResponse.json(new ApiError("Company not found"), {
+    const job = await Job.findById(ID);
+    if (!job) {
+      return NextResponse.json(new ApiError("Job not found"), {
         status: 404,
       });
     }
-    return NextResponse.json(new ApiResponse(company, "successfully fetched"));
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
-  }
+
+    return NextResponse.json(new ApiResponse(job, "successfully fetched"));
+  } catch (error) {}
 };

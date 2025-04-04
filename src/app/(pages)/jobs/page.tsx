@@ -18,7 +18,6 @@ async function fetchData() {
       // for server component
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data.data.data);
     return data.data.data;
   } catch (error) {
     console.log("error while fetching jobs", error);
@@ -38,9 +37,9 @@ const page = async ({ searchParams }: Props) => {
 
   return (
     <div className="container mx-auto">
-      <div className="grid grid-cols-5 py-10 gap-4">
+      <div className="grid grid-cols-6 py-10 gap-4">
         <JobFilter />
-        <div className="grid grid-cols-3 col-span-4 gap-3 ">
+        <div className="grid grid-cols-3 col-span-5 gap-3 ">
           {entries.map((job: any) => (
             <div key={job._id}>
               <JobCard
@@ -60,9 +59,6 @@ const page = async ({ searchParams }: Props) => {
               />
             </div>
           ))}
-          {/*<JobCard />
-          <JobCard />
-          <JobCard /> */}
         </div>
       </div>
     </div>

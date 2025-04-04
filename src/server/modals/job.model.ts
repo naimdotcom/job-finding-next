@@ -35,7 +35,7 @@ const JobSchema: Schema = new Schema<IJob>(
     },
     company: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
+      ref: "companies",
       required: true,
     },
     location: {
@@ -65,7 +65,7 @@ const JobSchema: Schema = new Schema<IJob>(
     },
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true, // Links to the Employer's user ID
     },
     expireAt: {

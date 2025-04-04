@@ -53,7 +53,7 @@ const CompanySchema: Schema = new Schema<ICompany>(
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Links to an Employer user
+      ref: "user", // Links to an Employer user
       required: true,
     },
   },

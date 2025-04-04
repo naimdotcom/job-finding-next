@@ -17,13 +17,16 @@ export const GET = async (req: Request) => {
     const user = JSON.parse(header || "{}") as payload;
     console.log("user: ", user.id);
     if (!user || !user.id) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", verified: false },
+        { status: 401 }
+      );
     }
-    const id = isValidObjectId(user.id) ? new Types.ObjectId(user.id) : user.id;
-    const isUserExist = await User.findOne({ _id: id });
-    if (!isUserExist) {
-      return NextResponse.json(new ApiError("User not found"), { status: 401 });
-    }
+    // const id = isValidObjectId(user.id) ? new Types.ObjectId(user.id) : user.id;
+    // const isUserExist = await User.findOne({ _id: id });
+    // if (!isUserExist) {
+    //   return NextResponse.json(new ApiError("User not found"), { status: 401 });
+    // }
     return NextResponse.json(
       new ApiResponse(user, "successfully verified", null)
     );

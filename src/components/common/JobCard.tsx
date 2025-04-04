@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Job } from "@/types/job";
 import { fromNow } from "@/lib/moment";
+import { Bookmark } from "lucide-react";
 
 type props = Job;
 
@@ -30,17 +31,22 @@ export function JobCard({
 }: props) {
   return (
     <Card className="w-full h-fit">
-      <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <Avatar>
-          <AvatarFallback>{title[0].toUpperCase()}</AvatarFallback>
-        </Avatar>
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <div className="flex flex-row items-center gap-4">
+          <Avatar>
+            <AvatarFallback>{title[0].toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h3 className="text-lg font-semibold">
+              {title[0].toUpperCase() + title.slice(1)}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {company.name} • {location}
+            </p>
+          </div>
+        </div>
         <div>
-          <h3 className="text-lg font-semibold">
-            {title[0].toUpperCase() + title.slice(1)}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            {company.name} • {location}
-          </p>
+          <Bookmark />
         </div>
       </CardHeader>
 

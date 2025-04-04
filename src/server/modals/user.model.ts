@@ -6,6 +6,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const userShema = new Schema<IUser>(
@@ -49,6 +50,6 @@ userShema.methods.comparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = model("User", userShema);
+const User = mongoose.models.User || model("User", userShema);
 
 export default User;

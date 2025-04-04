@@ -12,8 +12,6 @@ export async function middleware(req: NextRequest) {
     let auth = req.headers.get("Authorization");
     let token = auth?.replace("Bearer ", "");
 
-    console.log(token);
-
     // If no token in Authorization, fallback to cookies
     if (!token) {
       token = req.cookies.get("jobfindertoken")?.value || "";

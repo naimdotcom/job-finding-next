@@ -33,8 +33,8 @@ const connect = async () => {
 };
 
 // Enable Mongoose debugging in development mode
-if (process.env.NODE_ENV === "development") {
-  mongoose.set("debug", true);
-}
+// if (process.env.NODE_ENV === "development") {
+//   mongoose.set("debug", true);
+// }
 
 export default connect;

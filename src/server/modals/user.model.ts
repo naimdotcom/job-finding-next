@@ -6,7 +6,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: string;
-  skills: string[];
+  skills?: string[];
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -31,15 +31,13 @@ const userShema = new Schema<IUser>(
       default: "user",
       enum: ["user", "client", "admin"],
     },
-
-    // todo: varified work
-    // todo: add skills which will match with jobs requirments
     skills: [
       {
         type: String,
         trim: true,
       },
     ],
+    // todo: varified work
   },
   {
     timestamps: true,

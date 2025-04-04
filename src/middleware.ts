@@ -9,7 +9,10 @@ export async function middleware(req: NextRequest) {
     const isBackend = path.startsWith("/api");
 
     // Extract token from "Authorization" header (Bearer <token>)
-    let token = req.headers.get("Authorization")?.split(" ")[1];
+    let auth = req.headers.get("Authorization");
+    let token = auth?.replace("Bearer ", "");
+
+    console.log(token);
 
     // If no token in Authorization, fallback to cookies
     if (!token) {

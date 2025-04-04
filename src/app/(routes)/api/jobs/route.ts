@@ -11,8 +11,14 @@ export const GET = async (req: NextRequest) => {
 
     const jobs = await Job.find().populate("company").populate({
       path: "postedBy",
-      select: "-password -role",
+      select: "-password",
     });
+
+    if (!jobs) {
+      return NextResponse.json(new ApiError("Jobs not found"), {
+        status: 404,
+      });
+    }
 
     return NextResponse.json(new ApiResponse(jobs, "successfully fetched"));
   } catch (error) {

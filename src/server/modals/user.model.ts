@@ -1,7 +1,14 @@
 import bcrypt from "bcryptjs";
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
-const userShema = new Schema(
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
+const userShema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -42,6 +49,6 @@ userShema.methods.comparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = models.User || model("User", userShema);
+const User = model("User", userShema);
 
 export default User;

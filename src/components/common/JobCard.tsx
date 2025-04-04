@@ -32,12 +32,14 @@ export function JobCard({
     <Card className="w-full h-fit">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
         <Avatar>
-          <AvatarFallback>F</AvatarFallback>
+          <AvatarFallback>{title[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <h3 className="text-lg font-semibold">{title}</h3>
+          <h3 className="text-lg font-semibold">
+            {title[0].toUpperCase() + title.slice(1)}
+          </h3>
           <p className="text-sm text-muted-foreground">
-            {company} • {location}
+            {company.name} • {location}
           </p>
         </div>
       </CardHeader>
@@ -52,14 +54,16 @@ export function JobCard({
         <div className="flex flex-wrap gap-2 mb-3">
           {requirements.map((requirement) => (
             <Badge key={requirement} variant="outline">
-              {requirement}
+              {requirement[0].toUpperCase() + requirement.slice(1)}
             </Badge>
           ))}
         </div>
 
         <div className="flex justify-between text-sm text-muted-foreground">
-          <span>{fromNow(createdAt.toString())} • 140 Applicants</span>
-          <span className="font-medium">${startingSalary}/m</span>
+          <span>{fromNow(createdAt.toString())}</span>
+          <span className="font-medium w-fit">
+            ${startingSalary}k/m{endingSalary ? ` - ${endingSalary}k/m` : ""}
+          </span>
         </div>
       </CardContent>
 

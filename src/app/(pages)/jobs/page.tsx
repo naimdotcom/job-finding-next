@@ -42,7 +42,7 @@ const page = async ({ searchParams }: Props) => {
         <JobFilter />
         <div className="grid grid-cols-3 col-span-4 gap-3 ">
           {entries.map((job: any) => (
-            <div key={job.id}>
+            <div key={job._id}>
               <JobCard
                 title={job.title}
                 company={job.company}

@@ -38,7 +38,8 @@ export const POST = async (req: NextRequest) => {
       title,
       description,
       location,
-      salary,
+      startingSalary,
+      endingSalary,
       company,
       requirements,
       jobType,
@@ -52,7 +53,8 @@ export const POST = async (req: NextRequest) => {
       !company ||
       !requirements ||
       !jobType ||
-      !expireAt
+      !expireAt ||
+      !startingSalary
     ) {
       return NextResponse.json(new ApiError("All fields are required"), {
         status: 400,
@@ -79,23 +81,18 @@ export const POST = async (req: NextRequest) => {
         status: 401,
       });
     }
-    const requirementsArray = requirements
-      .split(",")
-      .foreach((item: string) => {
-        const text = item.trim();
-
-        return `${text[0].toUpperCase()}${text.slice(1)},`;
-      });
 
     const newJob = await Job.create({
       title,
       description,
       location,
-      ...(salary && { salary: salary }),
+
       company,
       requirements,
       jobType,
       expireAt,
+      startingSalary: startingSalary,
+      ...(endingSalary && { endingSalary }),
       postedBy: user.id,
     });
     if (!newJob) {

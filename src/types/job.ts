@@ -1,3 +1,5 @@
+import { ICompany } from "./company";
+
 export enum JobType {
   FULL_TIME = "full_time",
   PART_TIME = "part_time",
@@ -13,7 +15,7 @@ export type Job = {
   location: string;
   startingSalary: number;
   endingSalary: number;
-  company: string;
+  company: ICompany;
   requirements: string[];
   jobType: JobType;
   postedBy: string;

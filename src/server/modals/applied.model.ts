@@ -11,8 +11,8 @@ export enum ApplicationStatus {
 
 // Define the Job Applicant schema interface
 export interface IJobApplicant extends Document {
-  job: mongoose.Types.ObjectId; // Job ID
-  applicant: mongoose.Types.ObjectId; // User ID
+  job: mongoose.Types.ObjectId;
+  applicant: mongoose.Types.ObjectId;
   resumeUrl: string;
   coverLetter?: string;
   status: ApplicationStatus;
@@ -35,7 +35,7 @@ const JobApplicantSchema: Schema = new Schema<IJobApplicant>(
     },
     resumeUrl: {
       type: String,
-      required: true, // Link to uploaded resume (Firebase/Cloudinary, etc.)
+      required: true,
     },
     coverLetter: {
       type: String,

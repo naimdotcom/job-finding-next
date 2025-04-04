@@ -3,6 +3,16 @@ import { Button } from "../ui/button";
 import { ModeToggle } from "./ModalToggle";
 import { cookies } from "next/headers";
 import axiosInstance from "@/lib/axios";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { User } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 async function fetchData() {
   try {
@@ -37,29 +47,21 @@ export default async function Navbar() {
                 Jobs
               </Link>
             </li>
-            <li>
-              <Link href="/about" className="hover:underline">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="hover:underline">
-                Contact
-              </Link>
-            </li>
+
             {user.data && user.data.id ? (
-              <div className="flex gap-1.5">
-                <li>
-                  <Link href="/signup" className="hover:underline">
-                    <Button variant={"link"}>profile</Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="px-2 py-1 rounded-full">
+                  <User size={18} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <Link href={"/profile"}>
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
-                </li>
-                <li>
-                  <Link href="/log-in" className="hover:underline">
-                    <Button>log out</Button>
-                  </Link>
-                </li>
-              </div>
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <div className="flex gap-1.5">
                 <li>

@@ -1,5 +1,6 @@
 import { JobCard } from "@/components/common/JobCard";
 import JobFilter from "@/components/common/JobFilter";
+import Pagination from "@/components/common/Pagination";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
 import React from "react";
@@ -61,6 +62,7 @@ const page = async ({ searchParams }: Props) => {
           ))}
         </div>
       </div>
+      <Pagination currentPage={Number(PAGE)} totalPages={totalPage} />
     </div>
   );
 };

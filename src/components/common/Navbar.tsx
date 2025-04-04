@@ -24,7 +24,6 @@ async function fetchData() {
 
 export default async function Navbar() {
   const user = await fetchData();
-  console.log("user: ", user.data);
   return (
     <nav className="bg-zinc-200 dark:bg-zinc-900 drop-shadow-md text-white p-4 py-6 sticky top-0">
       <div className="container mx-auto flex justify-between items-center text-zinc-900 dark:text-white">

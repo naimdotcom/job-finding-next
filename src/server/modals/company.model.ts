@@ -9,6 +9,7 @@ export interface ICompany extends Document {
   description: string;
   foundedYear?: number;
   employees?: number;
+  aproved: boolean;
   owner: mongoose.Types.ObjectId; // Employer's ID
   createdAt: Date;
   updatedAt: Date;
@@ -50,6 +51,11 @@ const CompanySchema: Schema = new Schema<ICompany>(
     employees: {
       type: Number,
       min: 1,
+    },
+    aproved: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,

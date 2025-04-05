@@ -9,27 +9,39 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { FilePlus } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { capitalize } from "@/utils/Capitalize";
-
+import { DatePicker } from "../Date-Picker";
+import axiosInstance from "@/lib/axios";
+import { toast } from "sonner";
 type JobType = "Full-time" | "Part-time" | "Remote" | "Contract";
 
-const AddJob = () => {
+type props = {
+  companyId: string;
+};
+
+const AddJob = ({ companyId }: props) => {
   const [jobData, setJobData] = useState({
     title: "",
     description: "",
     location: "",
     startingSalary: "",
     endingSalary: "",
-    jobType: "Full-time" as JobType,
+    jobType: "full_time" as JobType,
     requirements: "",
-    expireAt: "",
   });
+  const [date, setDate] = React.useState<Date>();
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -41,6 +53,18 @@ const AddJob = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (
+      !date ||
+      !jobData.title ||
+      !jobData.description ||
+      !jobData.location ||
+      !jobData.startingSalary ||
+      !jobData.endingSalary ||
+      !jobData.requirements
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
 
     // Convert requirements from comma-separated to array
     const payload = {
@@ -50,10 +74,20 @@ const AddJob = () => {
       requirements: jobData.requirements
         .split(",")
         .map((r) => capitalize(r).trim()),
+      expireAt: date,
+      company: companyId || "67ef318d90af8feb6ffb38ca",
     };
 
-    console.log("Submit job:", payload);
     // TODO: Send this payload to backend using fetch or axios
+    const res = axiosInstance.post("/jobs", payload);
+
+    res
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("error while adding job", err);
+      });
   };
 
   return (
@@ -71,7 +105,7 @@ const AddJob = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4 w-full">
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="title">Job Title</Label>
@@ -109,23 +143,23 @@ const AddJob = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="startingSalary">Starting Salary</Label>
+              <Label htmlFor="startingSalary">Starting Salary ($k)</Label>
               <Input
                 type="number"
                 name="startingSalary"
                 value={jobData.startingSalary}
                 onChange={handleChange}
-                placeholder="30000"
+                placeholder="e.g. 20"
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="endingSalary">Ending Salary</Label>
+              <Label htmlFor="endingSalary">Ending Salary ($k)</Label>
               <Input
                 type="number"
                 name="endingSalary"
                 value={jobData.endingSalary}
                 onChange={handleChange}
-                placeholder="50000"
+                placeholder="e.g. 30"
               />
             </div>
           </div>
@@ -144,28 +178,28 @@ const AddJob = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="jobType">Job Type</Label>
-              <select
-                name="jobType"
+              <Select
                 value={jobData.jobType}
-                onChange={handleChange}
-                className={cn("w-full h-10 rounded-md border px-3")}
+                onValueChange={(value: JobType) =>
+                  setJobData({ ...jobData, jobType: value })
+                }
               >
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Remote">Remote</option>
-                <option value="Contract">Contract</option>
-              </select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Job Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="full_time">Full-time</SelectItem>
+                  <SelectItem value="part_time">Part-time</SelectItem>
+                  <SelectItem value="remote">Remote</SelectItem>
+                  <SelectItem value="internship">internship</SelectItem>
+                  <SelectItem value="contract">contract</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="expireAt">Expire At</Label>
-              <Input
-                type="date"
-                name="expireAt"
-                value={jobData.expireAt}
-                onChange={handleChange}
-                required
-              />
+              <DatePicker date={date} setDate={setDate} />
             </div>
           </div>
 

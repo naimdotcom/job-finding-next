@@ -9,6 +9,7 @@ import AddJob from "./AddJob";
 
 type CompanyProps = {
   company: {
+    _id: string;
     name: string;
     location: string;
     industry: string;
@@ -83,7 +84,13 @@ const CompanyDetails: React.FC<{ company: CompanyProps["company"] }> = ({
           <Button disabled={!company.aproved} variant="secondary">
             See posted jobs <ScanSearch />
           </Button>
-          <AddJob />
+          {company.aproved ? (
+            <AddJob companyId={company._id} />
+          ) : (
+            <Button disabled={!company.aproved} variant="secondary">
+              Add Job <FilePlus />
+            </Button>
+          )}
           <Button variant="destructive">
             Edit Company Details <FilePenLine />
           </Button>

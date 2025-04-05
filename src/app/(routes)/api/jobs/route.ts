@@ -109,7 +109,7 @@ export const POST = async (req: NextRequest) => {
 
     if (isCompanyCreatedByPoster.owner.toString() !== user.id) {
       console.log(isCompanyCreatedByPoster.owner.toString(), user.id);
-      return NextResponse.json(new ApiError("Unauthorized"), {
+      return NextResponse.json(new ApiError("company not created by you"), {
         status: 401,
       });
     }

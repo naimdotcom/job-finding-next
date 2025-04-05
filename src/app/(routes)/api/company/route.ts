@@ -3,6 +3,8 @@ import Company from "@/server/modals/company.model";
 import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
 import { NextRequest, NextResponse } from "next/server";
 import { payload } from "../auth/verify/route";
+import { isObjectIdOrHexString, isValidObjectId } from "mongoose";
+import User from "@/server/modals/user.model";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -63,8 +65,18 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
   try {
     await connect();
-
-    const companies = await Company.find();
+    const header = req.headers.get("x-user-data");
+    const user = JSON.parse(header || "{}") as payload;
+    const userID = isValidObjectId(user.id)
+      ? user.id
+      : isObjectIdOrHexString(user.id);
+    const companies = await Company.find({
+      owner: userID,
+    }).populate({
+      path: "owner",
+      model: User,
+      select: "-password -updatedAt -__v",
+    });
     if (!companies) {
       return NextResponse.json(new ApiError("Company not found"), {
         status: 404,

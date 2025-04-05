@@ -17,14 +17,14 @@ async function fetchData() {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("jobfindertoken")?.value || "";
-    if (!token) return null;
+    if (!token) return {};
     const data = await axiosInstance
       .get("/auth/verify", {
         // for server component
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => res.data)
-      .catch(() => null);
+      .catch(() => {});
     return data;
   } catch (error) {
     console.log("error while fetching auth", error);
@@ -44,6 +44,11 @@ export default async function Navbar() {
             <li>
               <Link href="/jobs" className="hover:underline">
                 Jobs
+              </Link>
+            </li>
+            <li>
+              <Link href="/company" className="hover:underline">
+                Company
               </Link>
             </li>
 

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
 import { FilePenLine, FilePlus, ScanSearch } from "lucide-react";
+import AddJob from "./AddJob";
 
 type CompanyProps = {
   company: {
@@ -79,12 +80,10 @@ const CompanyDetails: React.FC<{ company: CompanyProps["company"] }> = ({
         </div>
 
         <div className="flex flex-row gap-2">
-          <Button variant="secondary">
+          <Button disabled={!company.aproved} variant="secondary">
             See posted jobs <ScanSearch />
           </Button>
-          <Button variant="secondary">
-            Add Job <FilePlus />
-          </Button>
+          <AddJob />
           <Button variant="destructive">
             Edit Company Details <FilePenLine />
           </Button>

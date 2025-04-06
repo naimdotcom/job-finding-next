@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
 import { Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AddCompany from "@/components/company/AddComapny";
 
 // Fetching companies
 const fetchData = async () => {
@@ -53,12 +54,8 @@ const Page = async () => {
                 </TabsTrigger>
               ))}
             </TabsList>
-            <Button
-              variant="outline"
-              className="px-4 py-2 w-full text-base font-medium"
-            >
-              Create a new company <Building />
-            </Button>
+
+            <AddCompany />
           </div>
           {/* Tab Content */}
           {companies.map((company: any) => (

@@ -60,22 +60,22 @@ const AddCompany = ({}) => {
       description,
       foundedYear: foundedYear ? parseInt(foundedYear) : undefined,
       employees: employees ? parseInt(employees) : undefined,
-      aproved: false,
       //   owner: ownerId,
     };
 
     try {
-      await axiosInstance.post("/companies", payload);
+      const data = await axiosInstance.post("/company", payload);
       toast.success("Company added successfully!");
-      setCompanyData({
-        name: "",
-        location: "",
-        industry: "",
-        website: "",
-        description: "",
-        foundedYear: "",
-        employees: "",
-      });
+      console.log("data: ", data);
+      //   setCompanyData({
+      //     name: "",
+      //     location: "",
+      //     industry: "",
+      //     website: "",
+      //     description: "",
+      //     foundedYear: "",
+      //     employees: "",
+      //   });
     } catch (error) {
       console.error("Error adding company:", error);
       toast.error("Something went wrong while adding the company.");
@@ -142,7 +142,7 @@ const AddCompany = ({}) => {
             />
           </div>
 
-          <div className="grid gap-2">
+          <div className="grid gap-2 max-h-[200px]">
             <Label htmlFor="description">Description</Label>
             <Textarea
               name="description"

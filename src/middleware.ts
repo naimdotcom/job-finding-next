@@ -16,8 +16,6 @@ export async function middleware(req: NextRequest) {
     if (!token) {
       token = req.cookies.get("jobfindertoken")?.value || "";
     }
-
-    console.log("token: ", token);
     // If no token is found, handle unauthorized access
     if (!token) {
       if (isBackend) {

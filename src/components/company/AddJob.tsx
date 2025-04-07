@@ -84,9 +84,21 @@ const AddJob = ({ companyId }: props) => {
     res
       .then((res) => {
         console.log(res);
+        toast.success("Job added successfully");
+        setJobData({
+          title: "",
+          description: "",
+          location: "",
+          startingSalary: "",
+          endingSalary: "",
+          jobType: "full_time" as JobType,
+          requirements: "",
+        });
+        setDate(undefined);
       })
       .catch((err) => {
         console.log("error while adding job", err);
+        toast.error("Error while adding job");
       });
   };
 
@@ -130,7 +142,7 @@ const AddJob = ({ companyId }: props) => {
             </div>
           </div>
 
-          <div className="grid gap-2">
+          <div className="grid gap-2 max-h-[350px]">
             <Label htmlFor="description">Description</Label>
             <Textarea
               name="description"

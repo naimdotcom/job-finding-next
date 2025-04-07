@@ -15,7 +15,7 @@ export const GET = async (req: Request) => {
     await connect();
     const header = req.headers.get("x-user-data");
     const user = JSON.parse(header || "{}") as payload;
-    console.log("user: ", user.id);
+
     if (!user || !user.id) {
       return NextResponse.json(
         { message: "Unauthorized", verified: false },

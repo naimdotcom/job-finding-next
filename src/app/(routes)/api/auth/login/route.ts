@@ -31,8 +31,6 @@ export const POST = async (req: Request) => {
       });
     }
 
-    console.log("user: ", user);
-
     // todo: varified work
     // if (!user.varified) {
     //   return NextResponse.json(

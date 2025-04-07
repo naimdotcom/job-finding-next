@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
 import { FilePenLine, FilePlus, ScanSearch } from "lucide-react";
 import AddJob from "./AddJob";
+import Link from "next/link";
 
 type CompanyProps = {
   company: {
@@ -81,9 +82,11 @@ const CompanyDetails: React.FC<{ company: CompanyProps["company"] }> = ({
         </div>
 
         <div className="flex flex-row gap-2">
-          <Button disabled={!company.aproved} variant="secondary">
-            See posted jobs <ScanSearch />
-          </Button>
+          <Link href={`/company/${company._id}`}>
+            <Button disabled={!company.aproved} variant="secondary">
+              See posted jobs <ScanSearch />
+            </Button>
+          </Link>
           {company.aproved ? (
             <AddJob companyId={company._id} />
           ) : (

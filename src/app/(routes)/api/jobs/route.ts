@@ -6,8 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { payload } from "../auth/verify/route";
 import User from "@/server/modals/user.model";
 import cache from "@/server/utils/cache";
+import { CACHE_KEY, JOB_CACHE_KEY_PREFIX } from "@/server/utils/Constant";
 
-const CACHE_KEY = "jobs";
 export const GET = async (req: NextRequest) => {
   try {
     const cachedJobs = cache.get(CACHE_KEY);
@@ -38,7 +38,11 @@ export const GET = async (req: NextRequest) => {
         status: 404,
       });
     }
-    const plainJobs = jobs.map((job) => (job.toObject ? job.toObject() : job));
+    const plainJobs = jobs.map((job) => {
+      const plain = job.toObject ? job.toObject() : job;
+      cache.set(`${JOB_CACHE_KEY_PREFIX}${plain._id}`, plain, 600);
+      return plain;
+    });
 
     cache.set(CACHE_KEY, plainJobs, 600);
 

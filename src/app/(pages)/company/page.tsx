@@ -3,8 +3,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CompanyDetails from "@/components/company/CompanyDetails";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
-import { Building } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import AddCompany from "@/components/company/AddComapny";
 
 // Fetching companies

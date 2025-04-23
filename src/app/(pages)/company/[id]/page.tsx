@@ -4,25 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import axiosInstance from "@/lib/axios";
 import { format } from "date-fns";
+import EditJobsByCompany from "@/components/company/EditJobsByCompany";
+import { ICompany } from "@/types/company";
+import { Job } from "@/types/job";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-interface ICompany {
-  name: string;
-  location: string;
-  industry: string;
-  website?: string;
-  description: string;
-  foundedYear?: number;
-  employees?: number;
-  aproved: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 interface IJob {
+  _id: string;
   title: string;
   description: string;
   location: string;
@@ -50,7 +41,7 @@ const Page = async ({ params }: Props) => {
 
   if (!data) return <div className="p-4">Failed to load company data.</div>;
 
-  const { company, jobs }: { company: ICompany; jobs: IJob[] } = data;
+  const { company, jobs }: { company: ICompany; jobs: Job[] } = data;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -131,9 +122,7 @@ const Page = async ({ params }: Props) => {
                     {format(new Date(job.expireAt), "PPP")}
                   </div>
                 </div>
-                <Separator className="my-2" />
-                {/* // todo: edit button */}
-                <div></div>
+                <EditJobsByCompany company={company} job={job} />
               </CardContent>
             </Card>
           ))

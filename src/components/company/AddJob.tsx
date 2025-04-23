@@ -212,7 +212,7 @@ const AddJob = ({ companyId }: props) => {
 
             <div className="grid gap-2">
               <Label htmlFor="expireAt">Expire At</Label>
-              {/* <DatePicker date={date} setDate={setDate} /> */}
+
               <Input
                 type="date"
                 name="expireAt"

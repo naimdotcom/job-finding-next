@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import axiosInstance from "@/lib/axios";
-import { format } from "date-fns";
 import EditJobsByCompany from "@/components/company/EditJobsByCompany";
 import { ICompany } from "@/types/company";
 import { Job } from "@/types/job";
@@ -119,7 +118,7 @@ const Page = async ({ params }: Props) => {
                   </div>
                   <div>
                     <strong>Expires:</strong>{" "}
-                    {format(new Date(job.expireAt), "PPP")}
+                    {new Date(job.expireAt).toLocaleDateString()}
                   </div>
                 </div>
                 <EditJobsByCompany company={company} job={job} />

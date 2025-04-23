@@ -22,7 +22,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { FilePlus } from "lucide-react";
 import { capitalize } from "@/utils/Capitalize";
-import { DatePicker } from "../Date-Picker";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
 type JobType = "Full-time" | "Part-time" | "Remote" | "Contract";
@@ -101,6 +100,8 @@ const AddJob = ({ companyId }: props) => {
         toast.error("Error while adding job");
       });
   };
+
+  console.log("jobData", date);
 
   return (
     <Dialog>
@@ -211,7 +212,17 @@ const AddJob = ({ companyId }: props) => {
 
             <div className="grid gap-2">
               <Label htmlFor="expireAt">Expire At</Label>
-              <DatePicker date={date} setDate={setDate} />
+              {/* <DatePicker date={date} setDate={setDate} /> */}
+              <Input
+                type="date"
+                name="expireAt"
+                value={date ? date.toISOString().split("T")[0] : ""}
+                onChange={(e) => {
+                  const selectedDate = new Date(e.target.value);
+                  setDate(selectedDate);
+                }}
+                required
+              />
             </div>
           </div>
 

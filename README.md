@@ -36,14 +36,14 @@ A modern, full-featured job board application built using **Next.js 15 (App Rout
 
 ## 🧪 Project Structure
 
-src/
-├── app/ # App directory structure
-│ └── (routes)/ # API and Page routes
-├── components/ # UI + Common Components
-├── lib/ # Axios instance, date helpers, etc.
-├── server/ # DB connection, models, middlewares
-├── types/ # Shared TypeScript types
-├── utils/ # Utility functions
+    └── src/
+        ├── app/ # App directory structure
+        │   └── (routes)/ # API and Page routes
+        ├── components/ # UI + Common Components
+        ├── lib/ # Axios instance, date helpers, etc.
+        ├── server/ # DB connection, models, middlewares
+        ├── types/ # Shared TypeScript types
+        └── utils/ # Utility functions
 
 ---
 

@@ -63,6 +63,8 @@ const Page = async () => {
           ))}
         </Tabs>
       </div>
+
+      <div className="pt-10"></div>
     </div>
   );
 };

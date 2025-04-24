@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💼 job-finding-next
 
-## Getting Started
+A modern, full-featured job board application built using **Next.js 15 (App Router)**, **TypeScript**, **MongoDB**, and **Shadcn UI**. This platform enables users to search, post, and apply to jobs with an intuitive experience similar to LinkedIn.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- 🔐 **Authentication**: Secure login/signup with JWT and cookies
+- 🧑‍💼 **Role-based access**: Users can apply, and companies can post/manage jobs
+- 📋 **Job Management**: Add, edit, delete, and view job listings
+- 🏢 **Company Management**: Manage companies and their job postings
+- 🔍 **Filtering & Pagination**: Filter by job type, salary, experience
+- 🧭 **Shadcn + Tailwind UI**: Modern, clean, and fully responsive UI
+- ⚙️ **API Routes**: Full RESTful API structure
+- ⚡ **Server-side Middleware**: Route protection and token verification
+- 🔁 **Caching**: In-memory cache for performance optimization (NodeCache)
+- 📦 **Reusable Components**: Form inputs, job cards, modal, navbar, and more
+
+---
+
+## 🚀 Tech Stack
+
+| Tech             | Purpose                             |
+| ---------------- | ----------------------------------- |
+| Next.js 15       | React framework for full-stack app  |
+| TypeScript       | Type safety                         |
+| MongoDB/Mongoose | Database & ODM                      |
+| Shadcn UI        | Component library with Tailwind CSS |
+| Axios            | HTTP client                         |
+| bcryptjs         | Password hashing                    |
+| JWT & Cookies    | Auth and session management         |
+| Vercel           | Deployment                          |
+
+---
+
+## 🧪 Project Structure
+
+src/
+├── app/ # App directory structure
+│ └── (routes)/ # API and Page routes
+├── components/ # UI + Common Components
+├── lib/ # Axios instance, date helpers, etc.
+├── server/ # DB connection, models, middlewares
+├── types/ # Shared TypeScript types
+├── utils/ # Utility functions
+
+---
+
+## 🖥️ Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/naimdotcom-job-finding-next.git
+cd naimdotcom-job-finding-next
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set Up Environment Variables
 
-## Learn More
+Create a .env.local file and add the following:
 
-To learn more about Next.js, take a look at the following resources:
+```
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Run the Development Server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+npm run dev
+```
 
-## Deploy on Vercel
+Visit: http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### 🧑‍💻 Usage Example
+
+    •	Go to /signup to create a new user
+    •	Go to /company to create and manage your company
+    •	Post jobs from your company profile
+    •	View jobs at /jobs
+    •	Click on a job to view full details and apply
+
+---
+
+#### 🔒 Authentication Flow
+
+    1.	Users log in via /log-in
+    2.	Token is stored in cookie (jobfindertoken)
+    3.	Server middleware (src/middleware.ts) verifies the token
+    4.	Protected routes are accessible only when authenticated
+
+---
+
+#### 📬 API Structure
+
+Example API routes:
+
+Method Endpoint Description
+POST /api/auth/signup Register user
+POST /api/auth/login Login user
+GET /api/jobs Fetch all jobs
+POST /api/jobs Create new job
+GET /api/company/:id Company details + jobs
+DELETE /api/jobs/:id Delete job
+
+---
+
+📦 Deployment
+
+This project is optimized for deployment on Vercel.
+
+---
+
+#### 🧠 Credits
+
+Made with ❤️ by Naim Islam
+
+---
+
+#### 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+Let me know if you want a downloadable `.md` file or want to include screenshots/badges for GitHub display.

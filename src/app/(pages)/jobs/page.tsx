@@ -3,6 +3,7 @@ import JobFilter from "@/components/common/JobFilter";
 import Pagination from "@/components/common/Pagination";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import React from "react";
 
 type Props = {
@@ -42,7 +43,7 @@ const page = async ({ searchParams }: Props) => {
         <JobFilter />
         <div className="grid grid-cols-3 col-span-5 gap-3 ">
           {entries.map((job: any) => (
-            <div key={job._id}>
+            <Link href={`/jobs/${job._id}`} key={job._id}>
               <JobCard
                 title={job.title}
                 company={job.company}
@@ -58,7 +59,7 @@ const page = async ({ searchParams }: Props) => {
                 updatedAt={job.updatedAt}
                 postedBy={job.postedBy}
               />
-            </div>
+            </Link>
           ))}
         </div>
       </div>

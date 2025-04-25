@@ -7,26 +7,25 @@ import { Button } from "../ui/button";
 import { FilePenLine, FilePlus, ScanSearch } from "lucide-react";
 import AddJob from "./AddJob";
 import Link from "next/link";
+import { ICompany } from "@/types/company";
 
-type CompanyProps = {
-  company: {
-    _id: string;
-    name: string;
-    location: string;
-    industry: string;
-    website?: string;
-    description: string;
-    foundedYear?: number;
-    employees?: number;
-    aproved: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
-};
+// type CompanyProps = {
+//   company: {
+//     _id: string;
+//     name: string;
+//     location: string;
+//     industry: string;
+//     website?: string;
+//     description: string;
+//     foundedYear?: number;
+//     employees?: number;
+//     aproved: boolean;
+//     createdAt: string;
+//     updatedAt: string;
+//   };
+// };
 
-const CompanyDetails: React.FC<{ company: CompanyProps["company"] }> = ({
-  company,
-}) => {
+const CompanyDetails: React.FC<{ company: ICompany }> = ({ company }) => {
   return (
     <Card className="w-full max-w-xl">
       <CardHeader>

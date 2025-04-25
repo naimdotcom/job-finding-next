@@ -11,19 +11,6 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-interface IJob {
-  _id: string;
-  title: string;
-  description: string;
-  location: string;
-  startingSalary?: number;
-  endingSalary?: number;
-  requirements: string[];
-  jobType: "remote" | "onsite" | "hybrid"; // adjust to your actual enum
-  expireAt: Date;
-  createdAt: Date;
-}
-
 const fetchData = async ({ id }: { id: string }) => {
   try {
     const res = await axiosInstance.get(`/company/${id}`);

@@ -12,4 +12,5 @@ export type ICompany = {
   updatedAt: Date;
   owner: userT | string;
   employees?: number;
+  aproved: boolean;
 };

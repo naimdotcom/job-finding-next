@@ -19,20 +19,22 @@ import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { DatePicker } from "../Date-Picker";
 import { Button } from "../ui/button";
 import { FilePlus } from "lucide-react";
 import { useState } from "react";
 import { ICompany } from "@/types/company";
-import { Job, JobType } from "@/types/job";
+import { Job } from "@/types/job";
 type props = {
   company: ICompany;
   job: Job;
 };
 
 const EditJobsByCompany = ({ company, job }: props) => {
-  const [date, setDate] = useState("1991-01-01");
-  const [jobData, setJobData] = useState<Job>(job);
+  // const [date, setDate] = useState("1991-01-01");
+  const [jobData, setJobData] = useState<Job>({
+    ...job,
+    expireAt: new Date(job.expireAt),
+  });
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -45,7 +47,7 @@ const EditJobsByCompany = ({ company, job }: props) => {
 
     // Example: Send to API
     try {
-      const res = await fetch(`/api/jobs/${job.id}`, {
+      const res = await fetch(`/api/jobs/${job._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...jobData, companyId: company._id }),
@@ -59,7 +61,7 @@ const EditJobsByCompany = ({ company, job }: props) => {
     }
   };
 
-  console.log("company details...:", company);
+  // console.log("company details...:", company);
   return (
     <>
       <div>
@@ -79,7 +81,7 @@ const EditJobsByCompany = ({ company, job }: props) => {
               </DialogDescription>
             </DialogHeader>
 
-            <form className="grid gap-4 py-4 w-full">
+            <form className="grid gap-4 py-4 w-full" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="title">Job Title</Label>
@@ -176,11 +178,15 @@ const EditJobsByCompany = ({ company, job }: props) => {
 
                 <div className="grid gap-2">
                   <Label htmlFor="expireAt">Expire At</Label>
-                  <DatePicker
-                    date={jobData.expireAt}
-                    setDate={(newDate: Date) =>
-                      setJobData((prev) => ({ ...prev, expireAt: newDate }))
+                  <Input
+                    type="date"
+                    name="expireAt"
+                    value={
+                      jobData.expireAt
+                        ? (jobData.expireAt as Date).toISOString().split("T")[0]
+                        : ""
                     }
+                    onChange={handleChange}
                   />
                 </div>
               </div>

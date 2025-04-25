@@ -8,7 +8,7 @@ import User from "@/server/modals/user.model";
 import cache from "@/server/utils/cache";
 import { CACHE_KEY, JOB_CACHE_KEY_PREFIX } from "@/server/utils/Constant";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   try {
     const cachedJobs = cache.get(CACHE_KEY);
 

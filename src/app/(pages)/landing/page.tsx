@@ -1,6 +1,6 @@
 import SearchComponent from "@/components/common/Search";
 import { Button } from "@/components/ui/button";
-import { Search, Briefcase, MapPin, ChevronRight } from "lucide-react";
+import { Briefcase, MapPin, ChevronRight } from "lucide-react";
 
 export default function Home() {
   return (

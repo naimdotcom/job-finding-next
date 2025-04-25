@@ -281,7 +281,7 @@ const AddJob = ({ companyId }: props) => {
                   className="px-2 py-1 bg-zinc-200 dark:bg-zinc-800 text-sm rounded flex gap-2 items-center"
                 >
                   {cat}
-                  <span
+                  <b
                     onClick={() => {
                       setJobData({
                         ...jobData,
@@ -290,7 +290,7 @@ const AddJob = ({ companyId }: props) => {
                     }}
                   >
                     <X size={14} />
-                  </span>
+                  </b>
                 </span>
               ))}
             </div>

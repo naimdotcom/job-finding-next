@@ -1,7 +1,5 @@
 import connect from "@/server/DB";
-import User from "@/server/modals/user.model";
-import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
-import { isValidObjectId, Types } from "mongoose";
+import { ApiResponse } from "@/server/utils/ApiResponse";
 import { NextResponse } from "next/server";
 
 export type payload = {

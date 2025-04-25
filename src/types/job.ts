@@ -9,7 +9,7 @@ export enum JobType {
 }
 
 export type Job = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   location: string;

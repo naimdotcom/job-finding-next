@@ -3,3 +3,5 @@ const PERMISSiONS = {
   user: ["create", "read", "update"],
   guest: ["read"],
 };
+
+export default PERMISSiONS;

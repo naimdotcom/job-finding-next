@@ -1,19 +1,23 @@
 export class ApiResponse {
-  data: any;
+  data: object | Array<object> | string | undefined;
   message: string;
-  error: any;
-  constructor(data: any, message: string = "success", error: any = null) {
+  error: Error | null;
+  constructor(
+    data: object | Array<object> | string | undefined,
+    message = "success",
+    error: Error | null = null
+  ) {
     this.data = data;
     this.message = message;
-    this.error = error;
+    this.error = (error as Error) || null;
   }
 }
 
 export class ApiError {
   message: string;
-  error: any;
-  constructor(message: string, error: any = null) {
+  error: Error | null;
+  constructor(message: string, error: Error | null = null) {
     this.message = message;
-    this.error = error;
+    this.error = (error as Error) || null;
   }
 }

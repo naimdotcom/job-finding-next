@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
-  context: { params: Promise<any> }
+  context: { params: Promise<{ [key: string]: string }> }
 ) => {
   try {
     await connect();

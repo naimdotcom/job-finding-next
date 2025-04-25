@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
-  context: { params: Promise<any> }
+  context: { params: Promise<{ id: string }> }
 ) => {
   try {
     await connect();
@@ -44,8 +44,8 @@ export const GET = async (
         status: 200,
       }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.log("error while fetching company and jobs", error);
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    return NextResponse.json({ message: (error as Error).message }, { status: 500 });
   }
 };

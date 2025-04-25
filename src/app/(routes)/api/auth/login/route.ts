@@ -46,7 +46,7 @@ export const POST = async (req: Request) => {
     });
 
     const response = NextResponse.json(
-      new ApiResponse(user, "successfully logged in", token),
+      new ApiResponse(user, "successfully logged in"),
       { status: 200 }
     );
 
@@ -58,7 +58,7 @@ export const POST = async (req: Request) => {
     });
 
     return response;
-  } catch (error: any) {
-    console.log("error while user login", error.message);
+  } catch (error) {
+    console.log("error while user login", (error as Error).message);
   }
 };

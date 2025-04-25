@@ -1,7 +1,5 @@
 import connect from "@/server/DB";
-import Company from "@/server/modals/company.model";
 import Job from "@/server/modals/job.model";
-import User from "@/server/modals/user.model";
 import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
 import cache from "@/server/utils/cache";
 import { JOB_CACHE_KEY_PREFIX } from "@/server/utils/Constant";
@@ -10,8 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
   req: NextRequest,
-  context: { params: Promise<any> },
-  searchParams: Promise<{ [key: string]: string }>
+  context: { params: Promise<{ [key: string]: string }> }
+  // searchParams: Promise<{ [key: string]: string }>
 ) => {
   try {
     const { id } = await context.params;
@@ -37,16 +35,19 @@ export const GET = async (
     cache.set(`${JOB_CACHE_KEY_PREFIX}${id}`, job);
 
     return NextResponse.json(new ApiResponse(job, "successfully fetched"));
-  } catch (error: any) {
+  } catch (error) {
     console.log("error while geting job via id", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 };
 
 export const PUT = async (
   req: NextRequest,
   context: {
-    params: Promise<any>;
+    params: Promise<{ [key: string]: string }>;
   }
 ) => {
   try {
@@ -80,7 +81,7 @@ export const PUT = async (
 export const DELETE = async (
   req: NextRequest,
   context: {
-    params: Promise<any>;
+    params: Promise<{ [key: string]: string }>;
   }
 ) => {
   try {
@@ -99,13 +100,13 @@ export const DELETE = async (
     }
 
     return NextResponse.json(
-      new ApiResponse(deletedJob, "successfully deleted"),
+      new ApiResponse(deletedJob, "successfully deleted", null),
       {
         status: 200,
       }
     );
-  } catch (error: any) {
-    console.log("error while deleting job", error);
+  } catch (error) {
+    console.log("error while deleting job", error as Error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }

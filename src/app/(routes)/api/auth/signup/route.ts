@@ -1,7 +1,6 @@
 import connect from "@/server/DB";
 import User from "@/server/modals/user.model";
 import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
-import { hashPassword } from "@/server/utils/bcrypt";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
@@ -42,8 +41,8 @@ export const POST = async (req: Request) => {
       { status: 201, statusText: "Created" }
     );
   } catch (error) {
-    console.log("error while user signup", error);
-    return NextResponse.json(new ApiError("User not created", error), {
+    console.log("error while user signup", error as Error);
+    return NextResponse.json(new ApiError("User not created", error as Error), {
       status: 500,
     });
   }

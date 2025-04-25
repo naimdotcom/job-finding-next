@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { Job } from "@/types/job";
 import { fromNow } from "@/lib/moment";
@@ -15,22 +15,17 @@ import { Bookmark } from "lucide-react";
 type props = Job;
 
 export function JobCard({
-  id,
+  _id,
   company,
   title,
   location,
   requirements,
   startingSalary,
   endingSalary,
-  jobType,
-  expireAt,
   createdAt,
-  description,
-  updatedAt,
-  postedBy,
 }: props) {
   return (
-    <Card className="w-full h-fit">
+    <Card className="w-full h-fit" key={_id}>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex flex-row items-center gap-4">
           <Avatar>

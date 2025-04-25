@@ -4,6 +4,7 @@ import CompanyDetails from "@/components/company/CompanyDetails";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
 import AddCompany from "@/components/company/AddComapny";
+import { ICompany } from "@/types/company";
 
 // Fetching companies
 const fetchData = async () => {
@@ -42,7 +43,7 @@ const Page = async () => {
           {/* Tab Buttons */}
           <div className="space-y-3">
             <TabsList className="flex flex-col h-fit w-full py-1.5 px-2 gap-2.5">
-              {companies.map((company: any) => (
+              {companies.map((company: ICompany) => (
                 <TabsTrigger
                   key={company._id}
                   value={company._id}
@@ -56,7 +57,7 @@ const Page = async () => {
             <AddCompany />
           </div>
           {/* Tab Content */}
-          {companies.map((company: any) => (
+          {companies.map((company: ICompany) => (
             <TabsContent key={company._id} value={company._id}>
               <CompanyDetails company={company} />
             </TabsContent>

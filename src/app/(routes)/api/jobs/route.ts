@@ -80,6 +80,7 @@ export const POST = async (req: NextRequest) => {
       requirements,
       jobType,
       expireAt,
+      categories,
     } = body;
 
     if (
@@ -90,7 +91,8 @@ export const POST = async (req: NextRequest) => {
       !requirements ||
       !jobType ||
       !expireAt ||
-      !startingSalary
+      !startingSalary ||
+      !categories
     ) {
       return NextResponse.json(new ApiError("All fields are required"), {
         status: 400,
@@ -127,6 +129,7 @@ export const POST = async (req: NextRequest) => {
       jobType,
       expireAt,
       startingSalary: startingSalary,
+      categories,
       ...(endingSalary && { endingSalary }),
       postedBy: user.id,
     });

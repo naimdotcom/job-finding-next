@@ -19,6 +19,7 @@ export interface IJob extends Document {
   company: mongoose.Types.ObjectId;
   requirements: string[];
   jobType: JobType;
+  categories: string[];
   postedBy: mongoose.Types.ObjectId; // Employer's ID
   expireAt: Date;
   createdAt: Date;
@@ -67,6 +68,10 @@ const JobSchema: Schema = new Schema<IJob>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true, // Links to the Employer's user ID
+    },
+    categories: {
+      type: [String],
+      required: true,
     },
     expireAt: {
       type: Date,

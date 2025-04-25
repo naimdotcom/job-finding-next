@@ -115,8 +115,8 @@ const AddJob = ({ companyId }: props) => {
           Add Job <FilePlus className="mr-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[50vh] overflow-y-scroll ">
-        <DialogHeader>
+      <DialogContent className="max-h-[80vh] overflow-y-scroll max-w-3xl">
+        <DialogHeader className="">
           <DialogTitle>Add New Job</DialogTitle>
           <DialogDescription>
             Fill out the job information below.

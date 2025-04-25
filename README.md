@@ -2,6 +2,8 @@
 
 A modern, full-featured job board application built using **Next.js 15 (App Router)**, **TypeScript**, **MongoDB**, and **Shadcn UI**. This platform enables users to search, post, and apply to jobs with an intuitive experience similar to LinkedIn.
 
+#### Project Live Link: [job-finding-next](https://job-finding-next.vercel.app/)
+
 ---
 
 ## ✨ Features

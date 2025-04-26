@@ -1,4 +1,5 @@
 import connect from "@/server/DB";
+import Company from "@/server/modals/company.model";
 import Job from "@/server/modals/job.model";
 import { ApiError, ApiResponse } from "@/server/utils/ApiResponse";
 import cache from "@/server/utils/cache";

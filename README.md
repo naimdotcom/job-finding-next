@@ -131,7 +131,3 @@ Made with ❤️ by Naim Islam
 #### 📄 License
 
 This project is licensed under the MIT License.
-
----
-
-Let me know if you want a downloadable `.md` file or want to include screenshots/badges for GitHub display.

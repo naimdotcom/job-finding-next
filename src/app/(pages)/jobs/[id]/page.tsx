@@ -5,6 +5,7 @@ import { CalendarDays, MapPin, DollarSign } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
+import ApplyDialog from "@/components/common/ApplyModal";
 
 // Dummy job data (Replace with your actual data or fetch it from DB)
 const job = {
@@ -108,12 +109,8 @@ export default async function JobDetailPage({ params }: props) {
             </ul>
           </div>
 
-          <div className="pt-4">
-            <Link href={`/apply/${job.title}`}>
-              <Button size="lg" className="w-full">
-                Apply Now
-              </Button>
-            </Link>
+          <div className="pt-4 w-full">
+            <ApplyDialog jobId={id} />
           </div>
         </CardContent>
       </Card>

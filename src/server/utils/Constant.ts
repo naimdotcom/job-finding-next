@@ -1,4 +1,11 @@
 const CACHE_KEY = "jobs";
 const JOB_CACHE_KEY_PREFIX = "job_";
+const CACHE_KEY_JOB_APPLICANTS = "job_applicants";
+const JOB_APPLICANT_CACHE_KEY_PREFIX = "job_applicant_";
 
-export { CACHE_KEY, JOB_CACHE_KEY_PREFIX };
+export {
+  CACHE_KEY,
+  JOB_CACHE_KEY_PREFIX,
+  JOB_APPLICANT_CACHE_KEY_PREFIX,
+  CACHE_KEY_JOB_APPLICANTS,
+};

@@ -27,11 +27,13 @@ const JobApplicantSchema: Schema = new Schema<IJobApplicant>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "job",
       required: true,
+      index: true,
     },
     applicant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true,
+      index: true,
     },
     resumeUrl: {
       type: String,
@@ -50,5 +52,7 @@ const JobApplicantSchema: Schema = new Schema<IJobApplicant>(
 );
 
 // Export the Job Applicant model
-export default mongoose.models.JobApplicant ||
+const JobApplicant =
+  mongoose.models.JobApplicant ||
   mongoose.model<IJobApplicant>("JobApplicant", JobApplicantSchema);
+export default JobApplicant;

@@ -1,32 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CalendarDays, MapPin, DollarSign } from "lucide-react";
-import Link from "next/link";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";
 import ApplyDialog from "@/components/common/ApplyModal";
-
-// Dummy job data (Replace with your actual data or fetch it from DB)
-const job = {
-  title: "Frontend Developer",
-  description:
-    "We are looking for a passionate frontend developer to join our team and build scalable web applications.",
-  location: "New York, USA",
-  startingSalary: 60000,
-  endingSalary: 85000,
-  company: "Softvence",
-  requirements: [
-    "3+ years of experience with React",
-    "Strong HTML/CSS/JS fundamentals",
-    "Experience with Tailwind & Shadcn",
-    "Familiar with REST and GraphQL",
-  ],
-  jobType: "full_time",
-  postedBy: "John Doe",
-  expireAt: "2025-06-30",
-  createdAt: "2025-04-01",
-};
 
 const fetchData = async ({ id }: { id: string }) => {
   try {

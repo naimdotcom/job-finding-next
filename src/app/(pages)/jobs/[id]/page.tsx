@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, MapPin, DollarSign, User2 } from "lucide-react";
+import { CalendarDays, MapPin, DollarSign } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios";
 import { cookies } from "next/headers";

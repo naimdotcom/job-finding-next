@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FilePlus } from "lucide-react";
+import { FilePlus, Loader } from "lucide-react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
 import axios from "axios";
@@ -29,7 +29,7 @@ const ApplyDialog = ({ jobId }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    if (loading) return;
     if (!resumeUrl) {
       toast.error("Please upload or provide your resume link.");
       return;
@@ -102,8 +102,14 @@ const ApplyDialog = ({ jobId }: Props) => {
           </div>
 
           <div className="flex justify-end">
-            <Button type="submit" disabled={loading}>
-              {loading ? <span>Submitting... </span> : "Submit Application"}
+            <Button type="submit" disabled={loading || !resumeUrl}>
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  Submitting <Loader className="animate-spin" />
+                </span>
+              ) : (
+                "Submit Application"
+              )}
             </Button>
           </div>
         </form>

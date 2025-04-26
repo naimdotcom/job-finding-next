@@ -16,13 +16,13 @@ import { Button } from "@/components/ui/button";
 import { FilePlus } from "lucide-react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
+import axios from "axios";
 
 type Props = {
   jobId: string;
-  applicantId: string;
 };
 
-const ApplyDialog = ({ jobId, applicantId }: Props) => {
+const ApplyDialog = ({ jobId }: Props) => {
   const [resumeUrl, setResumeUrl] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,22 +38,26 @@ const ApplyDialog = ({ jobId, applicantId }: Props) => {
     try {
       setLoading(true);
       const payload = {
-        job: jobId,
-        applicant: applicantId,
+        jobId: jobId,
         resumeUrl,
         coverLetter,
       };
 
       const res = await axiosInstance.post("/apply", payload);
-
+      console.log("res", res.data.message);
       if (res.status === 200) {
         toast.success("Application submitted successfully!");
         setResumeUrl("");
         setCoverLetter("");
       }
     } catch (error) {
-      console.error("Error applying:", error);
-      toast.error("Failed to apply for the job.");
+      console.log("Error applying:", error);
+      const mes = axios.isAxiosError(error) && error.response?.data?.message;
+      toast.error(
+        mes == "User already applied the job"
+          ? "Your application has already been submitted"
+          : "Failed to apply for the job."
+      );
     } finally {
       setLoading(false);
     }
@@ -61,7 +65,7 @@ const ApplyDialog = ({ jobId, applicantId }: Props) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="w-full">
         <Button variant="default">
           Apply Now <FilePlus className="ml-2 h-4 w-4" />
         </Button>
@@ -99,7 +103,7 @@ const ApplyDialog = ({ jobId, applicantId }: Props) => {
 
           <div className="flex justify-end">
             <Button type="submit" disabled={loading}>
-              {loading ? "Submitting..." : "Submit Application"}
+              {loading ? <span>Submitting... </span> : "Submit Application"}
             </Button>
           </div>
         </form>

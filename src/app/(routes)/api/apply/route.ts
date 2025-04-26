@@ -94,7 +94,8 @@ export const POST = async (req: NextRequest) => {
     }
 
     return NextResponse.json(
-      new ApiResponse(appliedJob, "Job applied successfully")
+      new ApiResponse(appliedJob, "Job applied successfully"),
+      { status: 200 }
     );
   } catch (error) {
     console.log("error while applying job", error);

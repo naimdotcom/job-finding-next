@@ -109,8 +109,8 @@ export default async function JobDetailPage({ params }: props) {
             </ul>
           </div>
 
-          <div className="pt-4">
-            <ApplyDialog />
+          <div className="pt-4 w-full">
+            <ApplyDialog jobId={id} />
           </div>
         </CardContent>
       </Card>

@@ -12,6 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { loginType } from "./login-form";
+import { toast } from "sonner";
+import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/navigation";
 
 export type signupType = loginType & {
   name: string;
@@ -26,12 +29,26 @@ export function SignupForm({
     email: "",
     password: "",
   });
-
+  const router = useRouter();
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignupInfo({
       ...signupInfo,
       [e.target.id]: e.target.value,
     });
+  };
+
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await axiosInstance.post("/auth/signup", signupInfo);
+      if (res.status >= 200) {
+        toast.success("Signed up successfully");
+        router.push("/log-in");
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Error while signing up");
+    }
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -43,7 +60,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleOnSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="name">Name</Label>

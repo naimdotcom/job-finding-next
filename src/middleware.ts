@@ -83,5 +83,8 @@ export const config = {
     "/",
     "/company/:path*",
     "/company",
+    "/api/company/:path*",
+    "/api/apply",
+    "/api/apply/:path*",
   ],
 };

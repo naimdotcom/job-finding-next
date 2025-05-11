@@ -8,7 +8,6 @@ import Link from "next/link";
 import React from "react";
 
 type Props = {
-  // params: Promise<{ [key: string]: string }>;
   searchParams: Promise<{ [key: string]: string }>;
 };
 
@@ -18,7 +17,6 @@ async function fetchData() {
     const token = cookieStore.get("jobfindertoken")?.value || "";
     if (!token) return [];
     const data = await axiosInstance.get("/jobs", {
-      // for server component
       headers: { Authorization: `Bearer ${token}` },
     });
     return data.data.data;
@@ -31,40 +29,56 @@ async function fetchData() {
 const page = async ({ searchParams }: Props) => {
   const { page } = await searchParams;
   const data = await fetchData();
-  const ITEM_PER_PAGE = "12";
-  const PAGE = page ? page : "1";
-  const start = (Number(PAGE) - 1) * Number(ITEM_PER_PAGE);
-  const end = start + Number(ITEM_PER_PAGE);
-  const totalPage = Math.ceil(data.length / Number(ITEM_PER_PAGE));
+  const ITEM_PER_PAGE = 12;
+  const currentPage = page ? parseInt(page) : 1;
+  const start = (currentPage - 1) * ITEM_PER_PAGE;
+  const end = start + ITEM_PER_PAGE;
+  const totalPage = Math.ceil(data.length / ITEM_PER_PAGE);
   const entries = data.slice(start, end);
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-cols-6 py-10 gap-4">
-        <JobFilter />
-        <div className="grid grid-cols-3 col-span-5 gap-3 ">
-          {entries.map((job: Job) => (
-            <Link href={`/jobs/${job._id}`} key={job._id}>
-              <JobCard
-                title={job.title}
-                company={job.company}
-                location={job.location}
-                requirements={job.requirements}
-                startingSalary={job.startingSalary}
-                endingSalary={job.endingSalary}
-                jobType={job.jobType}
-                expireAt={job.expireAt}
-                createdAt={job.createdAt}
-                _id={job._id}
-                description={job.description}
-                updatedAt={job.updatedAt}
-                postedBy={job.postedBy}
-              />
-            </Link>
-          ))}
+    <div className="container mx-auto px-4 sm:px-6">
+      <div className="flex flex-col lg:flex-row gap-6 py-6 sm:py-10">
+        {/* Filter Sidebar - Full width on mobile, fixed width on desktop */}
+        <div className="w-full lg:w-64 xl:w-72">
+          <JobFilter />
+        </div>
+
+        {/* Job Listings */}
+        <div className="flex-1">
+          {/* Grid layout responsive to screen size */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            {entries.map((job: Job) => (
+              <Link
+                href={`/jobs/${job._id}`}
+                key={job._id}
+                className="transition-transform hover:scale-[1.02]"
+              >
+                <JobCard
+                  title={job.title}
+                  company={job.company}
+                  location={job.location}
+                  requirements={job.requirements}
+                  startingSalary={job.startingSalary}
+                  endingSalary={job.endingSalary}
+                  jobType={job.jobType}
+                  expireAt={job.expireAt}
+                  createdAt={job.createdAt}
+                  _id={job._id}
+                  description={job.description}
+                  updatedAt={job.updatedAt}
+                  postedBy={job.postedBy}
+                />
+              </Link>
+            ))}
+          </div>
+
+          {/* Pagination - Centered with proper spacing */}
+          <div className="mt-8 sm:mt-10">
+            <Pagination currentPage={currentPage} totalPages={totalPage} />
+          </div>
         </div>
       </div>
-      <Pagination currentPage={Number(PAGE)} totalPages={totalPage} />
     </div>
   );
 };

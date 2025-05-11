@@ -33,21 +33,24 @@ const Page = async () => {
   const defaultTab = companies.length > 0 ? companies[0]._id : "none";
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-4 sm:px-0">
       <h1 className="text-2xl font-bold">Your Companies</h1>
 
       <div className="mt-4 flex flex-col gap-2.5">
         <span className="text-muted-foreground">Select a company</span>
 
-        <Tabs defaultValue={defaultTab} className="w-full flex flex-row gap-4">
+        <Tabs
+          defaultValue={defaultTab}
+          className="w-full flex md:flex-row flex-col gap-4"
+        >
           {/* Tab Buttons */}
           <div className="space-y-3">
-            <TabsList className="flex flex-col h-fit w-full py-1.5 px-2 gap-2.5">
+            <TabsList className="flex flex-row md:flex-col overflow-x-auto w-full h-fit  py-1.5 px-2 gap-2.5">
               {companies.map((company: ICompany) => (
                 <TabsTrigger
                   key={company._id}
                   value={company._id}
-                  className="px-4 py-2 w-full"
+                  className="px-3 py-1.5 text-sm sm:px-4 sm:py-2 sm:text-base w-full min-w-fit md:min-w-full"
                 >
                   {company.name}
                 </TabsTrigger>
@@ -57,11 +60,13 @@ const Page = async () => {
             <AddCompany />
           </div>
           {/* Tab Content */}
-          {companies.map((company: ICompany) => (
-            <TabsContent key={company._id} value={company._id}>
-              <CompanyDetails company={company} />
-            </TabsContent>
-          ))}
+          <div className="w-full lg:w-2/3 xl:w-3/4">
+            {companies.map((company: ICompany) => (
+              <TabsContent key={company._id} value={company._id}>
+                <CompanyDetails company={company} />
+              </TabsContent>
+            ))}
+          </div>
         </Tabs>
       </div>
 

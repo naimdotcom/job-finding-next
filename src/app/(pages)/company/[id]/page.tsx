@@ -6,14 +6,23 @@ import axiosInstance from "@/lib/axios";
 import EditJobsByCompany from "@/components/company/EditJobsByCompany";
 import { ICompany } from "@/types/company";
 import { Job } from "@/types/job";
+import { cookies } from "next/headers";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
 const fetchData = async ({ id }: { id: string }) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jobfindertoken")?.value || "";
+
+  if (!token) return [];
   try {
-    const res = await axiosInstance.get(`/company/${id}`);
+    const res = await axiosInstance.get(`/company/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data.data;
   } catch (error) {
     console.log("error while fetching company", error);

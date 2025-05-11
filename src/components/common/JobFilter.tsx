@@ -79,7 +79,7 @@ const JobFilter = () => {
               ? "fixed inset-0 z-50 bg-white dark:bg-zinc-900 p-4 overflow-y-auto"
               : "hidden"
           }
-          lg:block lg:relative lg:bg-transparent lg:px-4 lg:py-2 lg:z-0
+          lg:block lg:relative lg:bg-transparent lg:px-4 lg:py-6 lg:z-0
           border rounded-lg shadow-md space-y-4 w-full max-w-md
         `}
       >

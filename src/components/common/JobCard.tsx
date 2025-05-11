@@ -14,7 +14,6 @@ import { Bookmark } from "lucide-react";
 type Props = Job;
 
 export function JobCard({
-  _id,
   company,
   title,
   location,

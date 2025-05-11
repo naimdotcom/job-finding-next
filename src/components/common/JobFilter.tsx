@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,10 @@ const experienceOptions = ["0to1", "1to3", "3to5", "5to10"];
 const JobFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = new URLSearchParams(useSearchParams().toString());
+  const rawSearchParams = useSearchParams();
+  const searchParams = useMemo(() => {
+    return new URLSearchParams(rawSearchParams.toString());
+  }, [rawSearchParams]);
 
   // State for mobile menu
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -28,11 +31,6 @@ const JobFilter = () => {
   );
 
   // Sync state with URL params on mount
-  useEffect(() => {
-    setSelectedJobType(searchParams.get("jobtype"));
-    setSelectedSalary(searchParams.get("salary"));
-    setSelectedExperience(searchParams.get("experience"));
-  }, []);
 
   // Function to update filter and URL
   const updateFilter = (
@@ -57,6 +55,12 @@ const JobFilter = () => {
     setSelectedExperience(null);
     router.push(pathname, { scroll: false });
   };
+
+  useEffect(() => {
+    setSelectedJobType(searchParams.get("jobtype"));
+    setSelectedSalary(searchParams.get("salary"));
+    setSelectedExperience(searchParams.get("experience"));
+  }, [searchParams]);
 
   return (
     <>

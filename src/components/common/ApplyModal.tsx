@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { FilePlus, Loader, UploadCloud } from "lucide-react";
+import { FilePlus, Loader } from "lucide-react";
 import axiosInstance from "@/lib/axios";
 import { toast } from "sonner";
 import axios from "axios";
@@ -27,32 +27,6 @@ const ApplyDialog = ({ jobId, className }: Props) => {
   const [resumeUrl, setResumeUrl] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [loading, setLoading] = useState(false);
-  const [fileUploading, setFileUploading] = useState(false);
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      // 5MB limit
-      toast.error("File size should be less than 5MB");
-      return;
-    }
-
-    try {
-      setFileUploading(true);
-      // Implement your file upload logic here
-      // const formData = new FormData();
-      // formData.append('file', file);
-      // const res = await axiosInstance.post('/upload', formData);
-      // setResumeUrl(res.data.url);
-      toast.success("File uploaded successfully");
-    } catch (error) {
-      toast.error("Failed to upload file");
-    } finally {
-      setFileUploading(false);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

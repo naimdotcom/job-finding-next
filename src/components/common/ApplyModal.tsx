@@ -114,7 +114,7 @@ const ApplyDialog = ({ jobId, className }: Props) => {
             </Label>
 
             {/* File Upload Option */}
-            <div className="flex flex-col sm:flex-row gap-2">
+            {/* <div className="flex flex-col sm:flex-row gap-2">
               <label className="flex-1">
                 <div className="flex items-center justify-center gap-2 p-4 border border-dashed rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                   <input
@@ -135,7 +135,7 @@ const ApplyDialog = ({ jobId, className }: Props) => {
               <div className="flex items-center justify-center text-xs sm:text-sm text-muted-foreground">
                 OR
               </div>
-            </div>
+            </div> */}
 
             {/* URL Input */}
             <Input
